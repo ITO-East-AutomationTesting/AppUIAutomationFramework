@@ -106,15 +106,13 @@ class BaseView(object):
 
     def get_screenshot(self):
         base_dir = os.path.dirname(os.path.dirname(__file__))
-        #shot_path = os.path.join(base_dir, 'screenshots')
         shot_path = os.path.join(base_dir, 'reports/screenshot')
         if not os.path.isdir(shot_path):
             os.makedirs(shot_path)
         pic_name = 'screenshot_' + time.strftime('%Y%m%d%H%M%S') + '.png'
         pic_url = os.path.join(shot_path, pic_name)
-
         try:
-            self.driver.save_screenshot(pic_url)
+            self.driver.get_screenshot_as_file(pic_url)
             print('screenshot_name:%s' % pic_url)
         except:
             raise
