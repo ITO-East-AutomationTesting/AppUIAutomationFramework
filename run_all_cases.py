@@ -3,7 +3,7 @@
 import unittest
 import HTMLTestRunnerCN
 import time
-import os
+import os 
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
 test_cases_path = os.path.join(base_dir, 'test_case')
