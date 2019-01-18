@@ -668,7 +668,8 @@ class HTMLTestRunner(Template_mixin):
         self.stopTime = datetime.datetime.now()
         self.generateReport(test, result)
         #print >>sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime)
-        print(sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime))
+        # print(sys.stderr, '\nTime Elapsed: %s' % (self.stopTime-self.startTime))
+        sys.stderr.write('\nTime Elapsed: %s\n' % (self.stopTime - self.startTime))
         return result
 
     def sortResult(self, result_list):
@@ -792,13 +793,13 @@ class HTMLTestRunner(Template_mixin):
         )
         return report
 
-
     def _generate_report_test(self, rows, cid, tid, n, t, o, e):
         # e.g. 'pt1.1', 'ft1.1', etc
         # o: 执行testcase过程值通过print打印出来的内容
         # e: exception的内容，一些出错信息
         has_output = bool(o or e)
-        tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid+1,tid+1)
+        # tid = (n == 0 and 'p' or 'f') + 't%s.%s' % (cid+1,tid+1)
+        tid = (n == 0 and 'p' or n == 3 and 's' or 'f') + 't%s.%s' % (cid + 1, tid + 1)
         name = t.id().split('.')[-1]
         doc = t.shortDescription() or ""
         desc = doc and ('%s: %s' % (name, doc)) or name
@@ -810,9 +811,10 @@ class HTMLTestRunner(Template_mixin):
             # uo = unicode(o.encode('string_escape'))
             # uo = o.decode('latin-1')
             # uo = o.decode('utf-8')
-            uo = e
+            uo = o
         else:
             uo = o
+
         if isinstance(e,str):
             # TODO: some problem with 'string_escape': it escape \n and mess up formating
             # ue = unicode(e.encode('string_escape'))
@@ -824,15 +826,16 @@ class HTMLTestRunner(Template_mixin):
 
         script = self.REPORT_TEST_OUTPUT_TMPL % dict(
             id = tid,
-            output = saxutils.escape(uo+ue),
+            output = str(uo+ue)
         )
 
         # 设置截图链接地址
-        if 'screenshot_name' in str(saxutils.escape(uo)):
+        if 'screenshot_name' in str(uo):
             hidde_status = ''
             pattern = re.compile(r'screenshot_name:(.*?).png', re.S)
-            pic_name = re.search(pattern, str(saxutils.escape(uo)))
-            image_url = 'screenshots\\' + pic_name.group(1) + '.png'
+            pic_name = re.search(pattern, str(uo))
+            # image_url = 'screenshots\\' + pic_name.group(1) + '.png'
+            image_url = 'file:///' + pic_name.group(1) + '.png'
         else:
             hidde_status = '''hidden="hidden"'''
             image_url = ''
