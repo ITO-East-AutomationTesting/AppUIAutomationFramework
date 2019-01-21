@@ -1,9 +1,11 @@
 # coding=utf-8
 
-import unittest
-import HTMLTestRunnerCN
-import time
 import os
+import time
+import unittest
+from common.send_wechat_report import send_wechat_report
+
+import HTMLTestRunnerCN
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
 test_cases_path = os.path.join(base_dir, 'test_case')
@@ -30,3 +32,4 @@ runner = HTMLTestRunnerCN.HTMLTestRunner(stream=fp, title='UI Automation Test Re
 runner.run(all_test_cases)
 
 fp.close()
+send_wechat_report()
