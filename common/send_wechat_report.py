@@ -11,7 +11,7 @@ def send_wechat_report():
     report_list = os.listdir(reportFilePath)
     report_list.sort(key=lambda fn: os.path.getatime(reportFilePath + '\\' + fn))
     new_report = os.path.join(reportFilePath, report_list[-2])
-    bot = Bot(cache_path=True, console_qr=True)
+    bot = Bot(cache_path=True, console_qr=1)
     group_test = bot.groups().search('测试')[0]
     group_test.send('自动化测试报告：')
     group_test.send_file(new_report)
