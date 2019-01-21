@@ -11,13 +11,10 @@ def send_wechat_report():
     report_list = os.listdir(reportFilePath)
     report_list.sort(key=lambda fn: os.path.getatime(reportFilePath + '\\' + fn))
     new_report = os.path.join(reportFilePath, report_list[-2])
-    try:
-        bot = Bot(cache_path=True)
-        group_test = bot.groups().search('测试')[0]
-        group_test.send('自动化测试报告：')
-        group_test.send_file(new_report)
-    except:
-        pass
+    bot = Bot(cache_path=True)
+    group_test = bot.groups().search('测试')[0]
+    group_test.send('自动化测试报告：')
+    group_test.send_file(new_report)
 
 
 if __name__ == '__main__':
