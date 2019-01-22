@@ -32,4 +32,4 @@ runner = HTMLTestRunnerCN.HTMLTestRunner(stream=fp, title='UI Automation Test Re
 runner.run(all_test_cases)
 
 fp.close()
-send_wechat_report()
+#send_wechat_report()
