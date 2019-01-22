@@ -5,7 +5,7 @@ deviceName: 127.0.0.1:62001
 
 # Galaxy S9
 #platformVersion: 8.0.0
-#deviceName: Galaxy S9test
+#deviceName: Galaxy S9testtest
 
 appname: kaoyan3.1.0.apk
 noReset: False
